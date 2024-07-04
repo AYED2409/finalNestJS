@@ -14,9 +14,17 @@ import { LikesModule } from './likes/likes.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { PlaylistsModule } from './playlists/playlists.module';
 import { PlaylistsVideosModule } from './playlists-videos/playlists-videos.module';
+import { ChatModule } from './chat/chat.module';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
+    //importaciones para chat con websocket, chat desde carpeta public
+    ChatModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
     //permite acceder a las variables de entorno de forma GLOBAL
     ConfigModule.forRoot({
       isGlobal: true,
@@ -53,6 +61,7 @@ import { PlaylistsVideosModule } from './playlists-videos/playlists-videos.modul
     SubscriptionsModule,
     PlaylistsModule,
     PlaylistsVideosModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
